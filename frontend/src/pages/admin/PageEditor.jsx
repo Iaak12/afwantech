@@ -1,8 +1,8 @@
 ﻿import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import AdminLayout from '../../components/admin/AdminLayout';
-
 import SectionEditor from '../../components/admin/SectionEditor';
+import API_BASE_URL from '../../config/api';
 
 const PageEditor = () => {
     const { slug } = useParams();
@@ -19,12 +19,12 @@ const PageEditor = () => {
 
     useEffect(() => {
         // Diagnostic check to ensure backend is reachable and correctly versioned
-        fetch('http://localhost:5005/api/auth/verify')
+        fetch(`${API_BASE_URL}/api/auth/verify`)
             .then(res => res.json())
             .then(ver => console.log('Backend Version:', ver))
             .catch(err => console.error('Backend Diagnostic Warning:', err));
 
-        fetch(`http://localhost:5005/api/pages/${slug}`)
+        fetch(`${API_BASE_URL}/api/pages/${slug}`)
             .then(res => res.json())
             .then(data => {
                 if (data.slug) {
@@ -49,7 +49,7 @@ const PageEditor = () => {
     }, [slug]);
 
     const handleSave = () => {
-        fetch('http://localhost:5005/api/pages', {
+        fetch(`${API_BASE_URL}/api/pages`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

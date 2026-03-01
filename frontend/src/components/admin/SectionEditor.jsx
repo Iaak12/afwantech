@@ -1,6 +1,7 @@
 ﻿import React, { useMemo, useRef } from 'react';
 import JoditEditor from 'jodit-react';
 import { FaImage, FaUpload, FaCheckCircle, FaExclamationTriangle, FaTrash } from 'react-icons/fa';
+import API_BASE_URL from '../../config/api';
 
 const InlineImageUploader = ({ value, onChange }) => {
     const [uploading, setUploading] = React.useState(false);
@@ -14,7 +15,7 @@ const InlineImageUploader = ({ value, onChange }) => {
         formData.append('image', file);
 
         try {
-            const res = await fetch('http://localhost:5005/api/v2/upload', {
+            const res = await fetch(`${API_BASE_URL}/api/v2/upload`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('adminToken')}`

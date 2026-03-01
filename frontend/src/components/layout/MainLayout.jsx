@@ -1,4 +1,5 @@
 ﻿import { useState, useEffect } from 'react';
+import API_BASE_URL from "../../config/api";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { Outlet, useLocation } from "react-router-dom";
@@ -17,7 +18,7 @@ const MainLayout = () => {
     // For nested routes like /blog/:slug, you might want to handle it differently, 
     // but for top-level pages this works perfectly.
 
-    fetch(`http://localhost:5005/api/pages/${slug}`)
+    fetch(`${API_BASE_URL}/api/pages/${slug}`)
       .then(res => res.json())
       .then(data => {
         if (data.metaTitle || data.metaDescription || data.keywords) {

@@ -1,5 +1,6 @@
 ﻿import { useState, useEffect } from "react";
 import PageMotion, { fadeUp } from "../components/common/PageMotion";
+import API_BASE_URL from "../config/api";
 
 const FAQ = () => {
   const [faqs, setFaqs] = useState([]);
@@ -7,7 +8,7 @@ const FAQ = () => {
   const [openIndex, setOpenIndex] = useState(null);
 
   useEffect(() => {
-    fetch('http://localhost:5005/api/faqs')
+    fetch(`${API_BASE_URL}/api/faqs`)
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {

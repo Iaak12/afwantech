@@ -2,6 +2,7 @@
 import { useParams, NavLink } from "react-router-dom";
 import { motion } from "framer-motion";
 import PageMotion, { fadeUp } from "../components/common/PageMotion";
+import API_BASE_URL from "../config/api";
 
 const BlogDetail = () => {
   const { slug } = useParams();
@@ -9,7 +10,7 @@ const BlogDetail = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`http://localhost:5005/api/blogs/slug/${slug}`)
+    fetch(`${API_BASE_URL}/api/blogs/slug/${slug}`)
       .then(res => res.json())
       .then(data => {
         setBlog(data);

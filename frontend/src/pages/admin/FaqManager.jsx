@@ -1,6 +1,7 @@
 ﻿import React, { useState, useEffect } from 'react';
 import AdminLayout from '../../components/admin/AdminLayout';
 import { FaPlus, FaEdit, FaTrash, FaTimes, FaSave, FaSearch, FaQuestionCircle } from 'react-icons/fa';
+import API_BASE_URL from '../../config/api';
 
 const FaqManager = () => {
     const [faqs, setFaqs] = useState([]);
@@ -18,7 +19,7 @@ const FaqManager = () => {
 
     const fetchFaqs = async () => {
         try {
-            const res = await fetch('http://localhost:5005/api/faqs');
+            const res = await fetch(`${API_BASE_URL}/api/faqs`);
             const data = await res.json();
             setFaqs(data);
             setLoading(false);
@@ -36,8 +37,8 @@ const FaqManager = () => {
 
         const method = currentFaq._id ? 'PUT' : 'POST';
         const url = currentFaq._id
-            ? `http://localhost:5005/api/faqs/${currentFaq._id}`
-            : 'http://localhost:5005/api/faqs';
+            ? `${API_BASE_URL}/api/faqs/${currentFaq._id}`
+            : `${API_BASE_URL}/api/faqs`;
 
         try {
             const res = await fetch(url, {
@@ -66,7 +67,7 @@ const FaqManager = () => {
         if (!window.confirm('Are you sure you want to delete this FAQ?')) return;
 
         try {
-            const res = await fetch(`http://localhost:5005/api/faqs/${id}`, {
+            const res = await fetch(`${API_BASE_URL}/api/faqs/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('adminToken')}`

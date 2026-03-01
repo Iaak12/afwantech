@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AdminLayout from '../../components/admin/AdminLayout';
 import { FaTrash, FaCheck, FaEnvelope } from 'react-icons/fa';
+import API_BASE_URL from '../../config/api';
 
 const ContactSubmissions = () => {
     const [messages, setMessages] = useState([]);
@@ -12,7 +13,7 @@ const ContactSubmissions = () => {
 
     const fetchMessages = async () => {
         try {
-            const res = await fetch('http://localhost:5005/api/contact', {
+            const res = await fetch(`${API_BASE_URL}/api/contact`, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('adminToken')}` // Ensure we pass token if required
                 }
@@ -30,7 +31,7 @@ const ContactSubmissions = () => {
 
     const markAsRead = async (id) => {
         try {
-            await fetch(`http://localhost:5005/api/contact/${id}/read`, {
+            await fetch(`${API_BASE_URL}/api/contact/${id}/read`, {
                 method: 'PATCH',
                 headers: { 'Authorization': `Bearer ${localStorage.getItem('adminToken')}` }
             });
@@ -44,7 +45,7 @@ const ContactSubmissions = () => {
         if (!window.confirm("Are you sure you want to delete this message?")) return;
 
         try {
-            await fetch(`http://localhost:5005/api/contact/${id}`, {
+            await fetch(`${API_BASE_URL}/api/contact/${id}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': `Bearer ${localStorage.getItem('adminToken')}` }
             });

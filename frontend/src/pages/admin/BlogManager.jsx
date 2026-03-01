@@ -2,6 +2,7 @@
 import AdminLayout from '../../components/admin/AdminLayout';
 import JoditEditor from 'jodit-react';
 import { FaPlus, FaEdit, FaTrash, FaGlobe, FaImage, FaTimes, FaSave, FaSearch } from 'react-icons/fa';
+import API_BASE_URL from '../../config/api';
 
 const BlogManager = () => {
     const [blogs, setBlogs] = useState([]);
@@ -40,7 +41,7 @@ const BlogManager = () => {
 
     const fetchBlogs = async () => {
         try {
-            const res = await fetch('http://localhost:5005/api/blogs');
+            const res = await fetch(`${API_BASE_URL}/api/blogs`);
             const data = await res.json();
             setBlogs(data);
             setLoading(false);
@@ -58,7 +59,7 @@ const BlogManager = () => {
         formData.append('image', file);
 
         try {
-            const res = await fetch('http://localhost:5005/api/v2/upload', {
+            const res = await fetch(`${API_BASE_URL}/api/v2/upload`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
@@ -77,8 +78,8 @@ const BlogManager = () => {
     const handleSave = async () => {
         const method = currentBlog._id ? 'PUT' : 'POST';
         const url = currentBlog._id
-            ? `http://localhost:5005/api/blogs/${currentBlog._id}`
-            : 'http://localhost:5005/api/blogs';
+            ? `${API_BASE_URL}/api/blogs/${currentBlog._id}`
+            : `${API_BASE_URL}/api/blogs`;
 
         // Auto-generate slug if empty
         const finalBlog = {
@@ -113,7 +114,7 @@ const BlogManager = () => {
         if (!window.confirm('Are you sure you want to delete this blog?')) return;
 
         try {
-            const res = await fetch(`http://localhost:5005/api/blogs/${id}`, {
+            const res = await fetch(`${API_BASE_URL}/api/blogs/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('adminToken')}`

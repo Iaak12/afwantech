@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AdminLayout from '../../components/admin/AdminLayout';
 import { FaPlus, FaEdit, FaTrash, FaTimes, FaSave, FaShareAlt } from 'react-icons/fa';
+import API_BASE_URL from '../../config/api';
 
 const SocialMediaManager = () => {
     const [socials, setSocials] = useState([]);
@@ -17,7 +18,7 @@ const SocialMediaManager = () => {
 
     const fetchSocials = async () => {
         try {
-            const res = await fetch('http://localhost:5005/api/social');
+            const res = await fetch(`${API_BASE_URL}/api/social`);
             const data = await res.json();
             setSocials(data);
             setLoading(false);
@@ -34,7 +35,7 @@ const SocialMediaManager = () => {
         }
 
         try {
-            const res = await fetch('http://localhost:5005/api/social', {
+            const res = await fetch(`${API_BASE_URL}/api/social`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -63,7 +64,7 @@ const SocialMediaManager = () => {
         if (!window.confirm('Are you sure you want to delete this social link?')) return;
 
         try {
-            const res = await fetch(`http://localhost:5005/api/social/${id}`, {
+            const res = await fetch(`${API_BASE_URL}/api/social/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('adminToken')}`

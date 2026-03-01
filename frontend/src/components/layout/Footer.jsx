@@ -1,4 +1,5 @@
 ﻿import React, { useState, useEffect } from "react";
+import API_BASE_URL from "../../config/api";
 import { Link } from "react-router-dom";
 import {
   FaFacebookF,
@@ -38,7 +39,7 @@ const Footer = () => {
   useEffect(() => {
     const fetchSocials = async () => {
       try {
-        const res = await fetch("http://localhost:5005/api/social");
+        const res = await fetch(`${API_BASE_URL}/api/social`);
         const data = await res.json();
         const linksObj = {};
         data.forEach(item => {

@@ -1,4 +1,5 @@
 ﻿import React, { useState, useEffect } from "react";
+import API_BASE_URL from "../../config/api";
 import {
   FaFacebookF,
   FaInstagram,
@@ -42,7 +43,7 @@ const SocialSidebar = () => {
   useEffect(() => {
     const fetchSocials = async () => {
       try {
-        const res = await fetch("http://localhost:5005/api/social");
+        const res = await fetch(`${API_BASE_URL}/api/social`);
         const data = await res.json();
         // Convert array to platform-keyed object for easy lookup
         const linksObj = {};

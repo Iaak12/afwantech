@@ -1,4 +1,5 @@
 import { useState } from "react";
+import API_BASE_URL from "../../config/api";
 import { FaUser, FaEnvelope, FaPhone, FaCommentDots } from "react-icons/fa";
 
 const ContactForm = () => {
@@ -23,7 +24,7 @@ const ContactForm = () => {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:5005/api/contact", {
+      const response = await fetch(`${API_BASE_URL}/api/contact`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData)

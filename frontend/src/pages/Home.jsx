@@ -1,5 +1,4 @@
-﻿
-import HeroSection from "../components/home/HeroSection";
+﻿import HeroSection from "../components/home/HeroSection";
 import WhySection from "../components/home/WhySection";
 import TrustedSection from "../components/home/TrustedSection";
 import UnlockSection from "../components/home/UnlockSection";
@@ -14,6 +13,7 @@ import StatsSection from "../components/home/StatsSection";
 import TechnologySection from "../components/home/TechnologySection";
 import NewsMediaSection from "../components/home/NewsMediaSection";
 import LifeAtAfwanTech from "../components/home/LifeAtWebTechSathi";
+import API_BASE_URL from "../config/api";
 
 import React, { useState, useEffect } from "react";
 
@@ -21,7 +21,7 @@ const Home = () => {
   const [pageData, setPageData] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:5005/api/pages/home")
+    fetch(`${API_BASE_URL}/api/pages/home`)
       .then((res) => res.json())
       .then((data) => {
         if (data && data.slug) {

@@ -1,5 +1,6 @@
 ﻿import React from 'react';
 import AdminLayout from '../../components/admin/AdminLayout';
+import API_BASE_URL from '../../config/api';
 
 const Dashboard = () => {
     const [stats, setStats] = React.useState([
@@ -11,7 +12,7 @@ const Dashboard = () => {
 
     React.useEffect(() => {
         // Fetch contact submissions count dynamically
-        fetch('http://localhost:5005/api/contact', {
+        fetch(`${API_BASE_URL}/api/contact`, {
             headers: { 'Authorization': `Bearer ${localStorage.getItem('adminToken')}` }
         })
             .then(res => res.json())

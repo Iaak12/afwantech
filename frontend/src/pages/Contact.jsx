@@ -1,4 +1,5 @@
 ﻿import React, { useState, useEffect } from "react";
+import API_BASE_URL from "../config/api";
 import Breadcrumb from "../components/common/Breadcrumb";
 import ContactSection from "../components/common/ContactSection";
 import StatsSection from "../components/home/StatsSection";
@@ -9,7 +10,7 @@ const Contact = () => {
   const [pageData, setPageData] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:5005/api/pages/contact")
+    fetch(`${API_BASE_URL}/api/pages/contact`)
       .then((res) => res.json())
       .then((data) => {
         if (data && data.slug) {

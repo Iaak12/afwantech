@@ -2,6 +2,7 @@
 import { NavLink } from "react-router-dom";
 import { motion } from "framer-motion";
 import PageMotion, { fadeUp, scaleUp, staggerContainer } from "../components/common/PageMotion";
+import API_BASE_URL from "../config/api";
 
 const BlogsPage = () => {
   const [blogs, setBlogs] = useState([]);
@@ -12,7 +13,7 @@ const BlogsPage = () => {
   const categories = ["All", "SEO", "Web Design", "Digital Marketing", "Branding", "Social Media"];
 
   useEffect(() => {
-    fetch('http://localhost:5005/api/blogs')
+    fetch(`${API_BASE_URL}/api/blogs`)
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
