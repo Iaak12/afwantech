@@ -1,7 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import AdminLayout from '../../components/admin/AdminLayout';
-import { FaPlus, FaEdit, FaTrash, FaTimes, FaSave, FaShareAlt } from 'react-icons/fa';
+import { FaPlus, FaEdit, FaTrash, FaTimes, FaSave, FaFacebookF, FaInstagram, FaYoutube, FaLinkedinIn, FaWhatsapp, FaTelegram, FaPinterest } from 'react-icons/fa';
+import { FaXTwitter, FaTiktok } from 'react-icons/fa6';
 import API_BASE_URL from '../../config/api';
+
+// Must match PLATFORM_MAP keys in SocialSidebar.jsx
+const SUPPORTED_PLATFORMS = [
+    { label: 'Facebook', value: 'Facebook' },
+    { label: 'Instagram', value: 'Instagram' },
+    { label: 'Youtube', value: 'Youtube' },
+    { label: 'Twitter / X', value: 'Twitter' },
+    { label: 'LinkedIn', value: 'Linkedin' },
+    { label: 'WhatsApp', value: 'Whatsapp' },
+    { label: 'Telegram', value: 'Telegram' },
+    { label: 'Pinterest', value: 'Pinterest' },
+    { label: 'TikTok', value: 'Tiktok' },
+];
 
 const SocialMediaManager = () => {
     const [socials, setSocials] = useState([]);
@@ -153,14 +167,18 @@ const SocialMediaManager = () => {
 
                         <div className="p-10 space-y-8">
                             <div>
-                                <label className="block text-[10px] font-black text-[#123447]/50 uppercase mb-3 tracking-widest">Platform Name</label>
-                                <input
-                                    type="text"
+                                <label className="block text-[10px] font-black text-[#123447]/50 uppercase mb-3 tracking-widest">Platform</label>
+                                <select
                                     value={currentSocial.platform}
                                     onChange={(e) => setCurrentSocial({ ...currentSocial, platform: e.target.value })}
                                     className="w-full p-4 border-2 border-gray-100 rounded-2xl bg-white outline-none focus:border-[#123447] font-bold text-gray-700 transition-all"
-                                    placeholder="e.g., Facebook, Instagram, Youtube, Linkedin, Twitter (X)"
-                                />
+                                >
+                                    <option value="">-- Select Platform --</option>
+                                    {SUPPORTED_PLATFORMS.map(p => (
+                                        <option key={p.value} value={p.value}>{p.label}</option>
+                                    ))}
+                                </select>
+                                <p className="text-[10px] text-gray-400 mt-2 italic font-bold">Icons and colors are assigned automatically by platform.</p>
                             </div>
 
                             <div>

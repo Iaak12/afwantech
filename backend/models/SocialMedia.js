@@ -5,18 +5,20 @@ const socialMediaSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true,
+        trim: true,
     },
     url: {
         type: String,
         required: true,
+        trim: true,
     },
     icon: {
         type: String,
-        required: true,
+        default: '',
     },
     backgroundColor: {
         type: String,
-        default: '#1877F2',
+        default: '',
     },
     order: {
         type: Number,

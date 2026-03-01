@@ -1,79 +1,70 @@
 ﻿import React, { useState, useEffect } from "react";
-import API_BASE_URL from "../../config/api";
 import {
   FaFacebookF,
   FaInstagram,
   FaYoutube,
   FaLinkedinIn,
+  FaWhatsapp,
+  FaTelegram,
+  FaPinterest,
 } from "react-icons/fa";
-import { FaXTwitter } from "react-icons/fa6";
+import { FaXTwitter, FaTiktok } from "react-icons/fa6";
+import API_BASE_URL from "../../config/api";
 
-// Static configuration for visual consistency
-const SOCIAL_CONFIG = [
-  {
-    name: "Facebook",
-    icon: <FaFacebookF />,
-    backgroundColor: "#1877F2",
-  },
-  {
-    name: "Instagram",
-    icon: <FaInstagram />,
-    backgroundColor: "linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%)",
-  },
-  {
-    name: "Youtube",
-    icon: <FaYoutube />,
-    backgroundColor: "#FF0000",
-  },
-  {
-    name: "Twitter",
-    icon: <FaXTwitter />,
-    backgroundColor: "#000000",
-  },
-  {
-    name: "Linkedin",
-    icon: <FaLinkedinIn />,
-    backgroundColor: "#0A66C2",
-  }
-];
+// Map platform names (lowercase) to icon + color
+const PLATFORM_MAP = {
+  facebook: { icon: <FaFacebookF />, bg: "#1877F2" },
+  instagram: { icon: <FaInstagram />, bg: "linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)" },
+  youtube: { icon: <FaYoutube />, bg: "#FF0000" },
+  twitter: { icon: <FaXTwitter />, bg: "#000000" },
+  x: { icon: <FaXTwitter />, bg: "#000000" },
+  linkedin: { icon: <FaLinkedinIn />, bg: "#0A66C2" },
+  whatsapp: { icon: <FaWhatsapp />, bg: "#25D366" },
+  telegram: { icon: <FaTelegram />, bg: "#229ED9" },
+  pinterest: { icon: <FaPinterest />, bg: "#E60023" },
+  tiktok: { icon: <FaTiktok />, bg: "#010101" },
+};
 
 const SocialSidebar = () => {
-  const [socialLinks, setSocialLinks] = useState({});
+  const [socials, setSocials] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchSocials = async () => {
-      try {
-        const res = await fetch(`${API_BASE_URL}/api/social`);
-        const data = await res.json();
-        // Convert array to platform-keyed object for easy lookup
-        const linksObj = {};
-        data.forEach(item => {
-          linksObj[item.platform.toLowerCase()] = item.url;
-        });
-        setSocialLinks(linksObj);
-      } catch (err) {
-        console.error("Error fetching socials:", err);
-      }
-    };
-    fetchSocials();
+    fetch(`${API_BASE_URL}/api/social`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data)) {
+          setSocials(data);
+        }
+      })
+      .catch((err) => console.error("SocialSidebar fetch error:", err))
+      .finally(() => setLoading(false));
   }, []);
 
+  if (loading || socials.length === 0) return null;
+
   return (
-    <div className="fixed right-0 top-1/3 z-50 flex flex-col gap-3">
-      {SOCIAL_CONFIG.map((platform) => {
-        const link = socialLinks[platform.name.toLowerCase()];
-        if (!link) return null; // Only show if link exists in backend
+    <div className="fixed right-0 top-1/3 z-50 flex flex-col gap-2">
+      {socials.map((social) => {
+        if (!social.url) return null;
+
+        const key = social.platform?.toLowerCase().trim();
+        const config = PLATFORM_MAP[key];
+
+        // Skip platforms not in our map (or render a generic icon)
+        if (!config) return null;
 
         return (
           <a
-            key={platform.name}
-            href={link}
+            key={social._id}
+            href={social.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-white w-12 h-12 flex items-center justify-center rounded-l-full shadow-lg hover:scale-110 transition duration-300"
-            style={{ background: platform.backgroundColor }}
+            title={social.platform}
+            className="text-white w-11 h-11 flex items-center justify-center rounded-l-full shadow-lg hover:scale-110 hover:w-14 transition-all duration-300"
+            style={{ background: config.bg }}
           >
-            {platform.icon}
+            {config.icon}
           </a>
         );
       })}
@@ -82,4 +73,3 @@ const SocialSidebar = () => {
 };
 
 export default SocialSidebar;
-
