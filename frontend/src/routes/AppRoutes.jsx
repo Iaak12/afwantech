@@ -68,6 +68,7 @@ import ProtectedRoute from "../components/admin/ProtectedRoute";
 import Logout from "../pages/admin/Logout";
 import ContactSubmissions from "../pages/admin/ContactSubmissions";
 import SocialMediaManager from "../pages/admin/SocialMediaManager";
+import HeaderFooterManager from "../pages/admin/HeaderFooterManager";
 
 const AppRoutes = () => {
   return (
@@ -141,6 +142,7 @@ const AppRoutes = () => {
       <Route path="/admin/faqs" element={<ProtectedRoute><FaqManager /></ProtectedRoute>} />
       <Route path="/admin/contact-submissions" element={<ProtectedRoute><ContactSubmissions /></ProtectedRoute>} />
       <Route path="/admin/social" element={<ProtectedRoute><SocialMediaManager /></ProtectedRoute>} />
+      <Route path="/admin/header-footer" element={<ProtectedRoute><HeaderFooterManager /></ProtectedRoute>} />
       <Route path="/admin/logout" element={<Logout />} />
     </Routes>
   );

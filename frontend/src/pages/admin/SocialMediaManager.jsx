@@ -17,6 +17,19 @@ const SUPPORTED_PLATFORMS = [
     { label: 'TikTok', value: 'Tiktok' },
 ];
 
+// Icon + brand color per platform (for card display)
+const PLATFORM_ICONS = {
+    facebook: { icon: <FaFacebookF />, bg: '#1877F2' },
+    instagram: { icon: <FaInstagram />, bg: '#E1306C' },
+    youtube: { icon: <FaYoutube />, bg: '#FF0000' },
+    twitter: { icon: <FaXTwitter />, bg: '#000000' },
+    linkedin: { icon: <FaLinkedinIn />, bg: '#0A66C2' },
+    whatsapp: { icon: <FaWhatsapp />, bg: '#25D366' },
+    telegram: { icon: <FaTelegram />, bg: '#229ED9' },
+    pinterest: { icon: <FaPinterest />, bg: '#E60023' },
+    tiktok: { icon: <FaTiktok />, bg: '#010101' },
+};
+
 const SocialMediaManager = () => {
     const [socials, setSocials] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -122,9 +135,10 @@ const SocialMediaManager = () => {
                                 <div key={social._id} className="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 hover:shadow-xl transition-all group">
                                     <div className="flex items-center gap-4 mb-6">
                                         <div
-                                            className="w-12 h-12 rounded-2xl flex items-center justify-center text-white text-xl shadow-lg bg-[#123447]"
+                                            className="w-12 h-12 rounded-2xl flex items-center justify-center text-white text-xl shadow-lg"
+                                            style={{ background: PLATFORM_ICONS[social.platform?.toLowerCase()]?.bg || '#123447' }}
                                         >
-                                            <FaShareAlt />
+                                            {PLATFORM_ICONS[social.platform?.toLowerCase()]?.icon || <FaPlus />}
                                         </div>
                                         <div>
                                             <h3 className="font-black text-[#123447]">{social.platform}</h3>

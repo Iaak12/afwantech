@@ -344,40 +344,44 @@ const SectionEditor = ({ section, onChange, onRemove }) => {
     const [activeTab, setActiveTab] = React.useState('form');
 
     return (
-        <div className="bg-white p-8 md:p-10 rounded-[2.5rem] border border-gray-100 relative group shadow-lg transition-all hover:shadow-2xl">
+        <div className="bg-white p-8 md:p-12 relative group">
             <button
                 onClick={onRemove}
-                className="absolute top-6 right-6 text-red-500 opacity-0 group-hover:opacity-100 transition-all hover:scale-110 bg-red-50 p-3 rounded-2xl shadow-sm border border-red-100"
+                className="absolute top-8 right-8 text-red-500 opacity-0 group-hover:opacity-100 transition-all hover:scale-110 bg-red-50 p-3 rounded-2xl shadow-sm border border-red-100 flex items-center gap-2 font-black text-[10px] pr-4 uppercase"
                 title="Remove Section"
             >
-                <FaTrash className="w-5 h-5" />
+                <FaTrash className="w-4 h-4 ml-1" />
+                DELETE SECTION
             </button>
 
-            <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-10 pr-12 gap-4">
+            <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-12 pr-12 gap-6">
                 <div className="flex items-center">
-                    <span className="bg-[#123447]/5 text-[#123447] text-[10px] font-black px-4 py-2 rounded-xl uppercase tracking-[0.2em] mr-4 shadow-inner border border-gray-100">
-                        {section.type}
-                    </span>
-                    <h3 className="font-black text-[#123447] capitalize text-xl tracking-tight">{section.type.replace('_', ' ')} Block</h3>
+                    <div className="w-16 h-16 bg-[#123447] text-white rounded-[1.5rem] flex items-center justify-center mr-5 text-3xl shadow-xl shadow-blue-900/10">
+                        {section.type === 'hero' ? '🚀' : '📦'}
+                    </div>
+                    <div>
+                        <h3 className="font-black text-[#123447] capitalize text-2xl tracking-tight">{section.type.replace('_', ' ')} Settings</h3>
+                        <p className="text-gray-400 text-xs font-medium uppercase tracking-widest mt-1">Configure your {section.type.replace('_', ' ')} block</p>
+                    </div>
                 </div>
 
-                <div className="flex bg-gray-100/60 p-1.5 rounded-2xl border border-gray-100">
+                <div className="flex bg-gray-100/80 p-1.5 rounded-2xl border border-gray-100">
                     <button
                         onClick={() => setActiveTab('form')}
-                        className={`px-6 py-2.5 text-xs font-black rounded-xl transition-all uppercase tracking-widest ${activeTab === 'form' ? 'bg-[#123447] shadow-xl text-white' : 'text-[#123447]/40 hover:text-[#123447]'}`}
+                        className={`px-8 py-3 text-[10px] font-black rounded-xl transition-all uppercase tracking-[0.1em] ${activeTab === 'form' ? 'bg-[#123447] shadow-lg text-white' : 'text-[#123447]/50 hover:text-[#123447]'}`}
                     >
-                        Editor View
+                        Editor
                     </button>
                     <button
                         onClick={() => setActiveTab('code')}
-                        className={`px-6 py-2.5 text-xs font-black rounded-xl transition-all uppercase tracking-widest ${activeTab === 'code' ? 'bg-[#123447] shadow-xl text-white' : 'text-[#123447]/40 hover:text-[#123447]'}`}
+                        className={`px-8 py-3 text-[10px] font-black rounded-xl transition-all uppercase tracking-[0.1em] ${activeTab === 'code' ? 'bg-[#123447] shadow-lg text-white' : 'text-[#123447]/50 hover:text-[#123447]'}`}
                     >
-                        JSON Logic
+                        JSON View
                     </button>
                 </div>
             </div>
 
-            <div className="mt-4">
+            <div className="mt-8 border-t border-gray-50 pt-10">
                 {activeTab === 'form' ? (
                     <div className="bg-white">
                         {section.type === 'hero' ? (
@@ -388,24 +392,24 @@ const SectionEditor = ({ section, onChange, onRemove }) => {
                     </div>
                 ) : (
                     <div>
-                        <div className="rounded-[2rem] overflow-hidden border-4 border-[#123447] shadow-2xl relative">
-                            <div className="absolute top-4 right-6 text-[10px] font-black text-green-500 uppercase tracking-widest animate-pulse">Advanced JSON Mode</div>
+                        <div className="rounded-[2.5rem] overflow-hidden border-8 border-[#0a1e35] shadow-2xl relative">
+                            <div className="absolute top-6 right-8 text-[10px] font-black text-blue-400/50 uppercase tracking-widest">Advanced JSON Logic</div>
                             <textarea
-                                rows="15"
+                                rows="18"
                                 value={typeof section.data === 'string' ? section.data : JSON.stringify(section.data, null, 2)}
                                 onBlur={(e) => {
                                     try {
                                         const parsed = JSON.parse(e.target.value);
                                         onChange({ ...section, data: parsed });
                                     } catch (err) {
-                                        alert("CRITICAL: Invalid JSON syntax. Changes rejected to prevent data loss.");
+                                        alert("CRITICAL: Invalid JSON syntax. Changes rejected.");
                                     }
                                 }}
-                                defaultValue={JSON.stringify(section.data, null, 2)}
-                                className="w-full p-8 outline-none font-mono text-sm bg-[#0a1e35] text-[#fbbf24] shadow-inner leading-relaxed"
+                                className="w-full p-10 outline-none font-mono text-sm bg-[#0a1e35] text-blue-200 shadow-inner leading-relaxed"
+                                spellCheck="false"
                             ></textarea>
                         </div>
-                        <p className="text-[10px] text-gray-400 font-bold mt-4 uppercase tracking-widest text-center italic opacity-60">⚠️ Edit with caution. Ensure valid JSON structure with double quotes.</p>
+                        <p className="text-[10px] text-gray-400 font-bold mt-6 uppercase tracking-[0.2em] text-center italic opacity-60">⚠️ Direct JSON editing is for advanced users only.</p>
                     </div>
                 )}
             </div>

@@ -1,6 +1,6 @@
 ﻿import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { FaTachometerAlt, FaFileAlt, FaPenNib, FaQuestionCircle, FaEnvelopeOpenText, FaSignOutAlt, FaShareAlt } from 'react-icons/fa';
+import { FaTachometerAlt, FaFileAlt, FaPenNib, FaQuestionCircle, FaEnvelopeOpenText, FaSignOutAlt, FaShareAlt, FaCogs } from 'react-icons/fa';
 
 const AdminSidebar = () => {
     const links = [
@@ -9,6 +9,7 @@ const AdminSidebar = () => {
         { title: 'Blogs & Articles', path: '/admin/blogs', icon: <FaPenNib /> },
         { title: 'Help & FAQs', path: '/admin/faqs', icon: <FaQuestionCircle /> },
         { title: 'Social Media', path: '/admin/social', icon: <FaShareAlt /> },
+        { title: 'Header & Footer', path: '/admin/header-footer', icon: <FaCogs /> },
         { title: 'Inquiries', path: '/admin/contact-submissions', icon: <FaEnvelopeOpenText /> },
     ];
 

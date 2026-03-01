@@ -1,4 +1,6 @@
-﻿import { Link } from "react-router-dom";
+﻿import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import API_BASE_URL from "../../config/api";
 import {
   FaPhoneAlt,
   FaChevronDown,
@@ -21,16 +23,29 @@ import {
 import logo from "../../assets/logo.png";
 
 const Navbar = () => {
+  const [settings, setSettings] = useState(null);
+
+  useEffect(() => {
+    fetch(`${API_BASE_URL}/api/header-footer`)
+      .then(res => res.json())
+      .then(data => setSettings(data))
+      .catch(err => console.error("Error fetching header settings:", err));
+  }, []);
+
+  const headerLogo = settings?.headerLogo || logo;
+  const phone = settings?.headerPhone || "+91-98688-98788";
+  const topText = settings?.headerTopBarText || 'Afwan Tech Has Been Named "Best SEO Company of the Year"';
+
   return (
     <header className="w-full relative z-50">
 
       {/* ===== TOP BAR ===== */}
       <div className="bg-black text-white text-sm px-6 py-2 flex justify-between items-center">
-        <p>Afwan Tech Has Been Named "Best SEO Company of the Year"</p>
+        <p>{topText}</p>
 
         <div className="flex items-center gap-4">
           <span className="flex items-center gap-2">
-            <FaPhoneAlt /> +91-98688-98788
+            <FaPhoneAlt /> {phone}
           </span>
 
           <Link to="/franchise" className="bg-blue-500 px-3 py-1 rounded text-xs">
@@ -52,7 +67,7 @@ const Navbar = () => {
 
           {/* LOGO */}
           <Link to="/">
-            <img src={logo} alt="Afwan Tech" className="h-16 md:h-20 object-contain drop-shadow-md" />
+            <img src={headerLogo} alt="Afwan Tech" className="h-16 md:h-20 object-contain drop-shadow-md" />
           </Link>
 
           {/* MENU */}

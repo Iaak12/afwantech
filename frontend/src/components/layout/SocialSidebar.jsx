@@ -9,6 +9,7 @@ import {
   FaPinterest,
 } from "react-icons/fa";
 import { FaXTwitter, FaTiktok } from "react-icons/fa6";
+import { FaShareAlt } from "react-icons/fa";
 import API_BASE_URL from "../../config/api";
 
 // Map platform names (lowercase) to icon + color
@@ -49,10 +50,7 @@ const SocialSidebar = () => {
         if (!social.url) return null;
 
         const key = social.platform?.toLowerCase().trim();
-        const config = PLATFORM_MAP[key];
-
-        // Skip platforms not in our map (or render a generic icon)
-        if (!config) return null;
+        const config = PLATFORM_MAP[key] || { icon: <FaShareAlt />, bg: "#123447" };
 
         return (
           <a
@@ -61,10 +59,12 @@ const SocialSidebar = () => {
             target="_blank"
             rel="noopener noreferrer"
             title={social.platform}
-            className="text-white w-11 h-11 flex items-center justify-center rounded-l-full shadow-lg hover:scale-110 hover:w-14 transition-all duration-300"
+            className="text-white w-11 h-11 flex items-center justify-center rounded-l-full shadow-lg hover:scale-110 hover:w-14 transition-all duration-300 group"
             style={{ background: config.bg }}
           >
-            {config.icon}
+            <span className="group-hover:scale-125 transition-transform">
+              {config.icon}
+            </span>
           </a>
         );
       })}

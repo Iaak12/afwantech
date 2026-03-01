@@ -36,6 +36,7 @@ app.use('/api/pages', require('./routes/pages'));
 app.use('/api/contact', require('./routes/contact'));
 app.use('/api/social', require('./routes/social'));
 app.use('/api/v2/upload', require('./routes/upload'));
+app.use('/api/header-footer', require('./routes/headerFooter'));
 
 // ── Database ──────────────────────────────────────────────────────────────────
 const connectDB = async () => {

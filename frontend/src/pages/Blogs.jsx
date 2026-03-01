@@ -110,13 +110,13 @@ const BlogsPage = () => {
                   className="group bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300"
                 >
                   <NavLink to={`/blog/${blog.slug}`} className="block">
-                    <div className="h-44 bg-gradient-to-br from-[#0b1f2d] to-[#1d3f54] flex items-center justify-center relative overflow-hidden">
+                    <div className="h-44 bg-gray-100 flex items-center justify-center relative overflow-hidden">
                       {blog.image ? (
-                        <img src={blog.image} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" alt="" />
+                        <img src={blog.image} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt={blog.title} />
                       ) : (
                         <div className="text-5xl opacity-20 absolute">📝</div>
                       )}
-                      <div className="absolute inset-0 bg-blue-600 bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
+                      <div className="absolute inset-0 bg-transparent group-hover:bg-blue-600/20 transition-all duration-300 flex items-center justify-center">
                         <span className="text-white font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-blue-600 px-4 py-2 rounded-lg text-sm">
                           Read Article →
                         </span>

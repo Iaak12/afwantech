@@ -48,6 +48,8 @@ const PageEditor = () => {
             });
     }, [slug]);
 
+    const [activeTab, setActiveTab] = useState('seo'); // Default to SEO or first section
+
     const handleSave = () => {
         fetch(`${API_BASE_URL}/api/pages`, {
             method: 'POST',
@@ -91,14 +93,12 @@ const PageEditor = () => {
             type,
             data: getDefaultDataForType(type)
         };
+        const updatedSections = [...pageData.sections, newSection];
         setPageData({
             ...pageData,
-            sections: [...pageData.sections, newSection]
+            sections: updatedSections
         });
-
-        setTimeout(() => {
-            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-        }, 150);
+        setActiveTab(updatedSections.length - 1);
     };
 
     const updateSection = (index, updatedSection) => {
@@ -110,6 +110,11 @@ const PageEditor = () => {
     const removeSection = (index) => {
         const newSections = pageData.sections.filter((_, i) => i !== index);
         setPageData({ ...pageData, sections: newSections });
+        if (activeTab === index) {
+            setActiveTab('seo');
+        } else if (typeof activeTab === 'number' && activeTab > index) {
+            setActiveTab(activeTab - 1);
+        }
     };
 
     const availableSectionOptions = [
@@ -149,143 +154,178 @@ const PageEditor = () => {
         opt => allowedSections.includes(opt.value) && !pageData.sections.find(s => s.type === opt.value)
     );
 
+    const getIconForType = (type) => {
+        switch (type) {
+            case 'hero': return '🚀';
+            case 'trusted': return '🤝';
+            case 'why': return '💡';
+            case 'unlock': return '🔓';
+            case 'case_studies': return '📋';
+            case 'webinar': return '📹';
+            case 'clients': return '👥';
+            case 'business_serve': return '🏢';
+            case 'brands': return '✨';
+            case 'tabs': return '📑';
+            case 'industries': return '🏬';
+            case 'technology': return '💻';
+            case 'stats': return '📊';
+            case 'news': return '📰';
+            case 'life': return '🌟';
+            case 'contact_section': return '📞';
+            case 'content': return '📝';
+            case 'seo': return '🔍';
+            default: return '📦';
+        }
+    };
+
     if (loading) return <div className="p-20 text-center font-bold text-gray-400">Loading High-Performance Editor...</div>;
 
     return (
         <AdminLayout>
-            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-10 gap-6">
+            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-8 gap-4">
                 <div>
-                    <button onClick={() => navigate('/admin/pages')} className="text-blue-500 font-bold mb-3 flex items-center hover:translate-x-1 transition-transform uppercase text-[10px] tracking-widest">
+                    <button onClick={() => navigate('/admin/pages')} className="text-blue-500 font-bold mb-2 flex items-center hover:translate-x-1 transition-transform uppercase text-[10px] tracking-widest">
                         <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M15 19l-7-7 7-7" />
                         </svg>
-                        Exit to Page List
+                        Back to List
                     </button>
-                    <h1 className="text-4xl font-black text-[#123447]">Editing <span className="text-[#fbbf24] uppercase">{pageData.title}</span></h1>
+                    <h1 className="text-3xl font-black text-[#123447]">{pageData.title} <span className="text-gray-300 font-normal text-lg ml-2">/ Page Editor</span></h1>
                 </div>
-                <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-3">
+                    <div className="hidden lg:flex items-center bg-gray-100 rounded-2xl px-4 py-2 text-[10px] font-black text-gray-400 uppercase tracking-widest mr-2">
+                        <div className="w-2 h-2 rounded-full bg-green-500 mr-2 animate-pulse"></div>
+                        Live Editor Active
+                    </div>
                     <button
                         onClick={handleSave}
-                        className="bg-[#123447] text-white px-10 py-4 rounded-2xl font-black hover:bg-[#fbbf24] hover:text-[#123447] transition-all shadow-2xl active:scale-95 flex items-center"
+                        className="bg-blue-600 text-white px-8 py-3.5 rounded-xl font-black hover:bg-blue-700 transition-all shadow-lg active:scale-95 flex items-center"
                     >
-                        <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M7.707 10.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V6h-2v5.586l-1.293-1.293z" />
-                        </svg>
-                        Publish Changes
+                        Save All Changes
                     </button>
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
-                {/* Left Column: Sections */}
-                <div className="xl:col-span-2 space-y-8">
-                    <div className="bg-white p-6 md:p-10 rounded-[2.5rem] shadow-xl border border-gray-100 relative overflow-hidden">
-                        <div className="flex justify-between items-center mb-10">
-                            <h2 className="text-2xl font-black text-[#123447] border-l-4 border-[#fbbf24] pl-5 uppercase tracking-tight">Content Blocks</h2>
+            {/* TABBED NAVIGATION TILES */}
+            <div className="mb-10 overflow-x-auto no-scrollbar pb-4 flex gap-4">
+                {/* SEO TILE */}
+                <button
+                    onClick={() => setActiveTab('seo')}
+                    className={`flex-shrink-0 flex flex-col items-center justify-center w-32 h-32 rounded-3xl transition-all border-2 ${activeTab === 'seo' ? 'bg-[#123447] border-[#123447] text-white shadow-xl scale-105' : 'bg-white border-gray-100 text-[#123447] hover:border-blue-200 hover:bg-blue-50'}`}
+                >
+                    <span className="text-3xl mb-2">{getIconForType('seo')}</span>
+                    <span className="text-[10px] font-black uppercase tracking-widest">SEO Settings</span>
+                </button>
 
-                            {unusedOptions.length > 0 ? (
-                                <div className="relative group">
-                                    <select
-                                        id="sectionSelect"
-                                        value=""
-                                        onChange={(e) => addSection(e.target.value)}
-                                        className="bg-[#fbbf24] text-[#123447] font-black rounded-2xl px-6 py-3.5 text-xs focus:ring-4 focus:ring-[#fbbf24]/30 outline-none shadow-lg cursor-pointer appearance-none pr-12 transition-all hover:scale-105 active:scale-95"
-                                    >
-                                        <option value="" disabled>✚ NEW CONTENT BLOCK</option>
-                                        {unusedOptions.map(opt => (
-                                            <option key={opt.value} value={opt.value}>{opt.label}</option>
-                                        ))}
-                                    </select>
-                                    <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-[#123447]">
-                                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 9l-7 7-7-7" />
-                                        </svg>
-                                    </div>
-                                </div>
-                            ) : (
-                                <div className="text-[10px] font-black text-green-600 bg-green-50 px-4 py-2 rounded-full border border-green-200 uppercase tracking-widest">
-                                    ✓ Fully Built Page
-                                </div>
-                            )}
-                        </div>
+                {/* SECTION TILES */}
+                {pageData.sections.map((section, index) => (
+                    <button
+                        key={index}
+                        onClick={() => setActiveTab(index)}
+                        className={`flex-shrink-0 flex flex-col items-center justify-center w-32 h-32 rounded-3xl transition-all border-2 ${activeTab === index ? 'bg-[#123447] border-[#123447] text-white shadow-xl scale-105' : 'bg-white border-gray-100 text-[#123447] hover:border-blue-200 hover:bg-blue-50'}`}
+                    >
+                        <span className="text-3xl mb-2">{getIconForType(section.type)}</span>
+                        <span className="text-[10px] font-black uppercase tracking-widest truncate w-full px-2">{section.type.replace('_', ' ')}</span>
+                    </button>
+                ))}
 
-                        <div className="space-y-8">
-                            {pageData.sections && pageData.sections.length > 0 ? pageData.sections.map((section, index) => (
-                                <SectionEditor
-                                    key={index}
-                                    section={section}
-                                    onChange={(updated) => updateSection(index, updated)}
-                                    onRemove={() => removeSection(index)}
-                                />
-                            )) : (
-                                <div className="border-4 border-dashed border-gray-100 rounded-[2rem] p-20 text-center text-gray-300">
-                                    <svg className="w-20 h-20 mx-auto opacity-20 mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                                    </svg>
-                                    <p className="font-bold text-lg uppercase tracking-widest opacity-40">Drop your first content block here</p>
-                                </div>
-                            )}
+                {/* ADD SECTION TILE */}
+                {unusedOptions.length > 0 && (
+                    <div className="relative group flex-shrink-0">
+                        <select
+                            value=""
+                            onChange={(e) => addSection(e.target.value)}
+                            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                        >
+                            <option value="" disabled>✚ NEW SECTION</option>
+                            {unusedOptions.map(opt => (
+                                <option key={opt.value} value={opt.value}>{opt.label}</option>
+                            ))}
+                        </select>
+                        <div className="flex flex-col items-center justify-center w-32 h-32 rounded-3xl transition-all border-2 border-dashed border-gray-200 text-gray-400 group-hover:border-blue-400 group-hover:text-blue-500 bg-gray-50/50">
+                            <span className="text-3xl mb-2">➕</span>
+                            <span className="text-[10px] font-black uppercase tracking-widest">Add Section</span>
                         </div>
                     </div>
-                </div>
+                )}
+            </div>
 
-                {/* Right Column: Meta & SEO */}
-                <div className="space-y-8">
-                    <div className="bg-[#123447] p-8 md:p-10 rounded-[2.5rem] shadow-2xl sticky top-8 border-t-8 border-[#fbbf24]">
-                        <h2 className="text-xl font-black text-white mb-8 border-b border-white/10 pb-4 flex items-center uppercase tracking-widest">
-                            <svg className="w-5 h-5 mr-3 text-[#fbbf24]" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.435.292-3.483.811a7.971 7.971 0 005.484 5.384c.236.85.343 1.745.343 2.656 0 2.21-1.343 4-3 4-1.657 0-3-1.79-3-4 0-.448.06-1.505.495-2.29C3.13 9.4 4.19 8.24 5.5 8c.348 0 .685.027 1.01.077Q6.505 8.525 6.5 9c0 2.21 1.79 4 4 4s4-1.79 4-4q-.005-.475-.01-1.01A7.968 7.968 0 0014.5 4c-1.255 0-2.435.292-3.483.811A7.971 7.971 0 005.533 10.205c-.236.85-.343 1.745-.343 2.656 0 2.21 1.343 4 3 4s3-1.79 3-4c0-.448-.06-1.505-.495-2.29C10.662 9.4 11.722 8.24 13.033 8c1.31.24 2.37.76 3.195 2.56.435.785.495 1.842.495 2.29 0 2.21-1.343 4-3 4-1.657 0-3-1.79-3-4q-.005-.475-.01-1.01z" />
-                            </svg>
-                            SEO Settings
-                        </h2>
-
-                        <div className="space-y-6">
+            <div className="max-w-5xl mx-auto">
+                {/* ACTIVE TAB CONTENT */}
+                {activeTab === 'seo' ? (
+                    <div className="bg-white p-10 rounded-[3rem] shadow-xl border border-gray-100">
+                        <div className="flex items-center mb-10">
+                            <div className="w-12 h-12 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mr-4 text-2xl">🔍</div>
                             <div>
-                                <label className="block text-[10px] font-black text-blue-300 uppercase mb-2 tracking-[0.2em]">Display Title</label>
+                                <h2 className="text-2xl font-black text-[#123447] uppercase tracking-tight">SEO & Meta Settings</h2>
+                                <p className="text-gray-400 text-sm font-medium">Control how this page appears in search results.</p>
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div>
+                                <label className="block text-[10px] font-black text-gray-400 uppercase mb-3 tracking-[0.2em]">Display Title (Admin Only)</label>
                                 <input
                                     type="text"
                                     value={pageData.title}
                                     onChange={(e) => setPageData({ ...pageData, title: e.target.value })}
-                                    className="w-full bg-white/5 border border-white/10 rounded-xl p-4 text-white font-bold outline-none focus:ring-2 focus:ring-[#fbbf24] transition-all shadow-inner"
+                                    className="w-full bg-gray-50 border border-gray-100 rounded-2xl p-4 text-[#123447] font-bold outline-none focus:ring-4 focus:ring-blue-100 transition-all"
                                 />
                             </div>
                             <div>
-                                <label className="block text-[10px] font-black text-blue-300 uppercase mb-2 tracking-[0.2em]">Meta Title (SEO)</label>
+                                <label className="block text-[10px] font-black text-gray-400 uppercase mb-3 tracking-[0.2em]">Meta Title (SEO)</label>
                                 <input
                                     type="text"
                                     value={pageData.metaTitle || ''}
                                     onChange={(e) => setPageData({ ...pageData, metaTitle: e.target.value })}
-                                    className="w-full bg-white/5 border border-white/10 rounded-xl p-4 text-white font-bold outline-none focus:ring-2 focus:ring-[#fbbf24] transition-all shadow-inner"
+                                    className="w-full bg-gray-50 border border-gray-100 rounded-2xl p-4 text-[#123447] font-bold outline-none focus:ring-4 focus:ring-blue-100 transition-all"
                                 />
                             </div>
-                            <div>
-                                <label className="block text-[10px] font-black text-blue-300 uppercase mb-2 tracking-[0.2em]">Keywords</label>
+                            <div className="md:col-span-2">
+                                <label className="block text-[10px] font-black text-gray-400 uppercase mb-3 tracking-[0.2em]">SEO Keywords</label>
                                 <input
                                     type="text"
                                     value={pageData.keywords || ''}
                                     onChange={(e) => setPageData({ ...pageData, keywords: e.target.value })}
-                                    placeholder="seo, tech, agency..."
-                                    className="w-full bg-white/5 border border-white/10 rounded-xl p-4 text-white font-bold outline-none focus:ring-2 focus:ring-[#fbbf24] transition-all shadow-inner"
+                                    placeholder="e.g. web design, branding agency, digital marketing"
+                                    className="w-full bg-gray-50 border border-gray-100 rounded-2xl p-4 text-[#123447] font-bold outline-none focus:ring-4 focus:ring-blue-100 transition-all"
                                 />
                             </div>
-                            <div>
-                                <label className="block text-[10px] font-black text-blue-300 uppercase mb-2 tracking-[0.2em]">Meta Description</label>
+                            <div className="md:col-span-2">
+                                <label className="block text-[10px] font-black text-gray-400 uppercase mb-3 tracking-[0.2em]">Meta Description</label>
                                 <textarea
                                     rows="4"
                                     value={pageData.metaDescription || ''}
                                     onChange={(e) => setPageData({ ...pageData, metaDescription: e.target.value })}
-                                    className="w-full bg-white/5 border border-white/10 rounded-xl p-4 text-white font-medium outline-none focus:ring-2 focus:ring-[#fbbf24] transition-all shadow-inner resize-none"
+                                    placeholder="Describe your page content for search engines..."
+                                    className="w-full bg-gray-50 border border-gray-100 rounded-2xl p-4 text-[#123447] font-medium outline-none focus:ring-4 focus:ring-blue-100 transition-all resize-none"
                                 ></textarea>
                             </div>
                         </div>
-
-                        <div className="mt-10 p-5 bg-white/5 rounded-2xl border border-white/5 text-blue-200/40 text-[10px] leading-relaxed italic">
-                            💡 Optimizing your Meta Title and Description increases your search engine visibility and click-through rates.
-                        </div>
                     </div>
-                </div>
+                ) : typeof activeTab === 'number' && pageData.sections[activeTab] ? (
+                    <div className="bg-white rounded-[3rem] shadow-2xl border border-gray-100 overflow-hidden">
+                        <SectionEditor
+                            section={pageData.sections[activeTab]}
+                            onChange={(updated) => updateSection(activeTab, updated)}
+                            onRemove={() => removeSection(activeTab)}
+                        />
+                    </div>
+                ) : (
+                    <div className="text-center py-20 bg-gray-50 rounded-[3rem] border border-dashed border-gray-200">
+                        <span className="text-6xl mb-4 block">👋</span>
+                        <h3 className="text-xl font-black text-gray-400 uppercase">Select a section to start editing</h3>
+                        <p className="text-gray-400 text-sm mt-2">Click on any tile above to edit your page content.</p>
+                    </div>
+                )}
             </div>
         </AdminLayout>
+    );
+};
+
+export default PageEditor;
+
+        </AdminLayout >
     );
 };
 
