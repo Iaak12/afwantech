@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const path = require('path');
 
 dotenv.config();
 
@@ -37,6 +38,13 @@ app.use('/api/contact', require('./routes/contact'));
 app.use('/api/social', require('./routes/social'));
 app.use('/api/v2/upload', require('./routes/upload'));
 app.use('/api/header-footer', require('./routes/headerFooter'));
+
+// ── Serve Frontend ────────────────────────────────────────────────────────────
+app.use(express.static(path.join(__dirname, '../frontend/dist')));
+
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../frontend/dist', 'index.html'));
+});
 
 // ── Database ──────────────────────────────────────────────────────────────────
 const connectDB = async () => {
