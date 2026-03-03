@@ -3,56 +3,33 @@ import { FaArrowRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const DigitalMarketingTabs = ({ data }) => {
-  const defaultTabsData = [
+  const defaultTabs = [
     {
       id: "seo",
       label: "SEO",
-      title: "Search Engine Optimization",
-      description: "You've found the correct SEO Agency if any of these four pain areas apply to you. We provide professional Google SEO services to improve rankings and generate organic traffic.",
-      btn: "Know More",
-      link: "/seo",
-      img: "https://res.cloudinary.com/dx0wvjqmg/image/upload/v1772321614/webtechsathi/s1wvegrvfzvfldh5i1he.jpg"
+      content: {
+        title: "Search Engine Optimization",
+        description: "You've found the correct SEO Agency if any of these four pain areas apply to you.",
+        btnText: "Know More",
+        btnLink: "/seo",
+        image: "https://res.cloudinary.com/dx0wvjqmg/image/upload/v1772321614/webtechsathi/s1wvegrvfzvfldh5i1he.jpg"
+      }
     },
     {
       id: "branding",
       label: "Digital Branding & PR",
-      title: "360 Degree Digital Branding Company in India",
-      description: "We provide 360-degree digital branding and PR services to ensure your business stands out as a credible and trusted brand across India and globally.",
-      btn: "View Service",
-      link: "/branding",
-      img: "https://res.cloudinary.com/dx0wvjqmg/image/upload/v1772321615/webtechsathi/yofwnmgdlhgsopwttoin.jpg"
-    },
-    {
-      id: "website",
-      label: "Website",
-      title: "Web Development and Design",
-      description: "Our Website with SEO in Multiple Cities service helps businesses expand their online presence and rank across various locations.",
-      btn: "Read More",
-      link: "/website",
-      img: "https://res.cloudinary.com/dx0wvjqmg/image/upload/v1772321617/webtechsathi/zzc20rueyvjdqmg4nrou.jpg"
-    },
-    {
-      id: "gmb",
-      label: "GMB",
-      title: "Boost Local Business with Expert Google Map Promotion",
-      description: "We specialize in Google Map Local Business promotion to drive local traffic and increase visibility with GMB optimization.",
-      btn: "View Service",
-      link: "/gmb",
-      img: "https://res.cloudinary.com/dx0wvjqmg/image/upload/v1772321618/webtechsathi/rq15e1unz2zjvfitxwuq.jpg"
-    },
-    {
-      id: "digital",
-      label: "Digital Marketing",
-      title: "Webpulse® : Your Trusted Partner in Digital Marketing in Delhi, India",
-      description: "We deliver customized digital marketing strategies focused on measurable growth, innovation, and performance.",
-      btn: "View Service",
-      link: "/digital-marketing",
-      img: "https://res.cloudinary.com/dx0wvjqmg/image/upload/v1772321619/webtechsathi/xqu4si4hkdh7nogcony2.jpg"
+      content: {
+        title: "360 Degree Digital Branding Company in India",
+        description: "We provide 360-degree digital branding and PR services to ensure your business stands out.",
+        btnText: "View Service",
+        btnLink: "/branding",
+        image: "https://res.cloudinary.com/dx0wvjqmg/image/upload/v1772321615/webtechsathi/yofwnmgdlhgsopwttoin.jpg"
+      }
     }
   ];
 
   const finalTitle = data?.title || "Digital Marketing Services Our Agency Offers";
-  const finalTabsData = data?.tabsData || defaultTabsData;
+  const finalTabsData = data?.tabsData || defaultTabs;
 
   const [activeTab, setActiveTab] = useState(finalTabsData[0]?.id || "seo");
 
@@ -63,7 +40,8 @@ const DigitalMarketingTabs = ({ data }) => {
     }
   }, [finalTabsData, activeTab]);
 
-  const activeContent = finalTabsData.find(tab => tab.id === activeTab) || finalTabsData[0];
+  const activeTabObj = finalTabsData.find(tab => tab.id === activeTab) || finalTabsData[0];
+  const activeContent = activeTabObj?.content;
 
   return (
     <section className="bg-white py-20">
@@ -75,22 +53,22 @@ const DigitalMarketingTabs = ({ data }) => {
         </h2>
 
         {/* Tabs */}
-        <div className="flex justify-between border-b border-gray-200 relative">
+        <div className="flex flex-wrap justify-center border-b border-gray-200 relative mb-12">
 
           {finalTabsData.map(tab => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`relative px-8 py-4 font-semibold transition ${activeTab === tab.id
+              className={`relative px-6 md:px-8 py-4 font-semibold transition ${activeTab === tab.id
                 ? "bg-[#15679a] text-white"
-                : "text-gray-600 hover:text-[#15679a]"
+                : "text-gray-600 hover:text-[#15679a] hover:bg-gray-50"
                 }`}
             >
               {tab.label}
 
               {/* Triangle */}
               {activeTab === tab.id && (
-                <span className="absolute left-1/2 -bottom-2 transform -translate-x-1/2 w-0 h-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-[#15679a]"></span>
+                <span className="absolute left-1/2 -bottom-2 transform -translate-x-1/2 w-0 h-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-[#15679a] z-10"></span>
               )}
             </button>
           ))}
@@ -99,31 +77,42 @@ const DigitalMarketingTabs = ({ data }) => {
 
         {/* Content Section */}
         {activeContent && (
-          <div className="grid md:grid-cols-2 gap-16 items-center mt-16">
+          <div className="grid md:grid-cols-2 gap-12 lg:gap-16 items-start mt-8">
 
             {/* Left Content */}
-            <div>
+            <div className="order-2 md:order-1">
               <h3 className="text-3xl font-bold text-[#123447] mb-6">
                 {activeContent.title}
               </h3>
 
-              <div className="text-gray-600 leading-relaxed mb-8" dangerouslySetInnerHTML={{ __html: activeContent.description }} />
+              <div className="text-gray-600 leading-relaxed mb-6" dangerouslySetInnerHTML={{ __html: activeContent.description }} />
+
+              {activeContent.list && activeContent.list.length > 0 && (
+                <ul className="mb-8 space-y-3">
+                  {activeContent.list.map((item, i) => (
+                    <li key={i} className="flex items-center gap-2 text-gray-700">
+                      <FaArrowRight className="text-yellow-500 text-xs" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              )}
 
               <Link
-                to={activeContent.link || "/contact"}
-                className="inline-flex items-center gap-3 bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-3 rounded transition"
+                to={activeContent.btnLink || "/contact"}
+                className="inline-flex items-center gap-3 bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-8 py-3 rounded-lg shadow-md transition-all hover:-translate-y-1"
               >
-                {activeContent.btn || "Know More"}
+                {activeContent.btnText || "Know More"}
                 <FaArrowRight />
               </Link>
             </div>
 
             {/* Right Image */}
-            <div className="text-center">
+            <div className="order-1 md:order-2 text-center">
               <img
-                src={activeContent.img}
+                src={activeContent.image}
                 alt={activeContent.title}
-                className="w-full max-w-md mx-auto"
+                className="w-full max-w-md mx-auto rounded-2xl shadow-2xl transition-transform hover:scale-105 duration-500"
               />
             </div>
 

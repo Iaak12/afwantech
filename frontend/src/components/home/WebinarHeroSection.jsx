@@ -2,40 +2,38 @@
 import { Link } from "react-router-dom";
 
 const WebinarHeroSection = ({ data }) => {
-  const defaultPointsLeft = [
+  const defaultPoints = [
     "Establish a strong online presence",
     "Generate genuine B2B leads",
     "Enhance your online reputation",
-  ];
-
-  const defaultPointsRight = [
     "Drive more website traffic",
     "Boost sales and turnover",
-    "Build the personal brand image of the founder",
+    "Build personal brand image"
   ];
 
-  const defaultThumbnails = [
+  const defaultImages = [
     "https://res.cloudinary.com/dx0wvjqmg/image/upload/v1772321642/webtechsathi/u0q5v1v81fjvzfggrncz.jpg",
     "https://res.cloudinary.com/dx0wvjqmg/image/upload/v1772321643/webtechsathi/lk4gcnbrdm3fpxgpey9k.jpg",
     "https://res.cloudinary.com/dx0wvjqmg/image/upload/v1772321645/webtechsathi/a08gcydwujdqabyctbim.jpg",
     "https://res.cloudinary.com/dx0wvjqmg/image/upload/v1772321646/webtechsathi/qghh0ob4cbbzgryxyczg.jpg",
-    "https://res.cloudinary.com/dx0wvjqmg/image/upload/v1772321647/webtechsathi/rtxbtzuogkitcw4xqcwi.jpg",
-    "https://images.unsplash.com/photo-1581090700227-1e8a0b61e8f1",
+    "https://res.cloudinary.com/dx0wvjqmg/image/upload/v1772321647/webtechsathi/rtxbtzuogkitcw4xqcwi.jpg"
   ];
 
   const finalTitle = data?.title || "Business Growth Formula Webinar";
-  const finalDescription = data?.description || "Join the Founder & CEO to unlock the Business Growth Formula.";
-  const finalSchedule = data?.schedule || "📅 Every Tuesday | ⏰ 11am to 12 Noon | On Zoom";
-  const finalPointsLeft = data?.pointsLeft || defaultPointsLeft;
-  const finalPointsRight = data?.pointsRight || defaultPointsRight;
-  const finalQuote = data?.quote || "Achieve business success and take your place among the top 5% of successful entrepreneurs. Don't miss this opportunity!";
-  const finalCoachName = data?.coachName || "Rahul Ranjan Singh - Awarded Best Business Growth Coach in India";
-  const finalThumbnails = data?.thumbnails || defaultThumbnails;
+  const finalSubtitle = data?.subtitle || "Free Webinar for Entrepreneurs";
+  const finalDateTime = data?.datetime || "Every Tuesday | 11am to 12 Noon | On Zoom";
+  const allPoints = data?.points || defaultPoints;
+  const finalPointsLeft = allPoints.slice(0, Math.ceil(allPoints.length / 2));
+  const finalPointsRight = allPoints.slice(Math.ceil(allPoints.length / 2));
+
+  const finalCoachName = data?.coachName || "Rahul Ranjan Singh";
+  const finalCoachTitle = data?.coachTitle || "Awarded Best Business Growth Coach in India";
+  const finalImages = data?.images || defaultImages;
   const finalMainImage = data?.mainImage || "https://res.cloudinary.com/dx0wvjqmg/image/upload/v1772321648/webtechsathi/j6eqfpatinfkfiujltia.jpg";
-  const finalBtnPrimaryText = data?.btnPrimaryText || "Book Your Slot Now →";
-  const finalBtnSecondaryText = data?.btnSecondaryText || "Read Story →";
-  const finalBtnPrimaryLink = data?.btnPrimaryLink || "/contact";
-  const finalBtnSecondaryLink = data?.btnSecondaryLink || "/contact";
+  const finalBtn1Text = data?.btn1Text || "Book Your Slot Now →";
+  const finalBtn2Text = data?.btn2Text || "Read Story →";
+  const finalBtn1Link = data?.btn1Link || "/contact";
+  const finalBtn2Link = data?.btn2Link || "/contact";
 
   return (
     <section className="bg-gradient-to-r from-[#0b2233] to-[#1b3f55] text-white py-24 relative overflow-hidden">
@@ -49,10 +47,10 @@ const WebinarHeroSection = ({ data }) => {
             {finalTitle}
           </h1>
 
-          <div className="mt-4 text-lg text-gray-200" dangerouslySetInnerHTML={{ __html: finalDescription }} />
+          <div className="mt-4 text-lg text-gray-200" dangerouslySetInnerHTML={{ __html: finalSubtitle }} />
 
           <p className="mt-2 text-sm text-gray-300">
-            {finalSchedule}
+            {finalDateTime}
           </p>
 
           {/* Learn How To */}
@@ -82,19 +80,17 @@ const WebinarHeroSection = ({ data }) => {
             </div>
           </div>
 
-          {/* Highlight Line */}
-          <p className="mt-8 text-sm text-gray-300 pr-10">
-            {finalQuote}
-          </p>
-
           {/* Award Title */}
-          <h2 className="mt-6 text-3xl font-bold text-yellow-400">
-            {finalCoachName.split('-').map((t, i) => i === 0 ? <span key={i}>{t} - <br /></span> : <span key={i}>{t}</span>)}
-          </h2>
+          <div className="mt-8">
+            <h2 className="text-3xl font-bold text-yellow-400 leading-tight">
+              {finalCoachName}
+            </h2>
+            <p className="text-gray-300 text-lg mt-1">{finalCoachTitle}</p>
+          </div>
 
           {/* Thumbnails */}
-          <div className="grid grid-cols-6 gap-2 mt-6">
-            {finalThumbnails.map((img, i) => (
+          <div className="grid grid-cols-5 gap-2 mt-6">
+            {finalImages.map((img, i) => (
               <img
                 key={i}
                 src={img}
@@ -107,17 +103,17 @@ const WebinarHeroSection = ({ data }) => {
           {/* Buttons */}
           <div className="flex gap-4 mt-8">
             <Link
-              to={finalBtnPrimaryLink}
+              to={finalBtn1Link}
               className="bg-yellow-400 text-black px-6 py-3 rounded font-semibold hover:bg-yellow-500 transition"
             >
-              {finalBtnPrimaryText}
+              {finalBtn1Text}
             </Link>
 
             <Link
-              to={finalBtnSecondaryLink}
+              to={finalBtn2Link}
               className="border border-gray-400 px-6 py-3 rounded font-semibold hover:bg-white hover:text-black transition"
             >
-              {finalBtnSecondaryText}
+              {finalBtn2Text}
             </Link>
           </div>
         </div>

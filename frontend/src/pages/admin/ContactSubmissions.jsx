@@ -98,6 +98,16 @@ const ContactSubmissions = () => {
                                         </td>
                                         <td className="p-4 text-sm text-gray-600">
                                             <p className="line-clamp-2" title={msg.message}>{msg.message}</p>
+                                            {msg.extraFields && Object.keys(msg.extraFields).length > 0 && (
+                                                <div className="mt-2 text-xs border-t border-gray-100 pt-2 text-gray-500">
+                                                    <strong>Extra Fields:</strong>
+                                                    <ul className="mt-1 space-y-1">
+                                                        {Object.entries(msg.extraFields).map(([key, value]) => (
+                                                            <li key={key}><span className="font-semibold">{key}:</span> {value}</li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
+                                            )}
                                         </td>
                                         <td className="p-4">
                                             <span className={`px-3 py-1 rounded-full text-xs font-bold ${msg.isRead ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>

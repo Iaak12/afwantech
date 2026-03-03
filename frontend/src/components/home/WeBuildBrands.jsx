@@ -3,17 +3,27 @@ import { MdWeb } from "react-icons/md";
 import { GiCrown } from "react-icons/gi";
 
 const WeBuildBrands = ({ data }) => {
-  const defaultCards = [
-    { title: "Web Designing", text: "We specialize in building visually stunning websites.", position: "top-0 left-10", iconType: "MdWeb" },
-    { title: "Brand Recognition", text: "Recognising outstanding companies for quality.", position: "top-0 right-10", iconType: "GiCrown" },
-    { title: "Lead Generation", text: "City-wise SEO to generate targeted leads.", position: "top-1/2 -translate-y-1/2 left-0", iconType: "FaChartLine" },
-    { title: "PR & Branding", text: "Media coverage on leading news websites.", position: "top-1/2 -translate-y-1/2 right-0", iconType: "FaBullhorn" },
-    { title: "Digital Marketing", text: "SEO, PPC, Meta Ads & more.", position: "bottom-0 left-16", iconType: "FaPaintBrush" },
-    { title: "Electronic Media", text: "National TV coverage like Zee Business.", position: "bottom-0 right-16", iconType: "FaTv" },
+  const defaultNodes = [
+    { title: "Web Designing", description: "Visually stunning websites.", icon: "MdWeb" },
+    { title: "Brand Recognition", description: "Recognising quality companies.", icon: "GiCrown" },
+    { title: "Lead Generation", description: "City-wise SEO for leads.", icon: "FaChartLine" },
+    { title: "PR & Branding", description: "Leading news media coverage.", icon: "FaBullhorn" },
+    { title: "Digital Marketing", description: "SEO, PPC, Meta Ads.", icon: "FaPaintBrush" },
+    { title: "Electronic Media", description: "National TV coverage.", icon: "FaTv" },
   ];
 
-  const getIcon = (type) => {
-    switch (type) {
+  const positions = [
+    "top-0 left-10",
+    "top-0 right-10",
+    "top-1/2 -translate-y-1/2 left-0",
+    "top-1/2 -translate-y-1/2 right-0",
+    "bottom-0 left-16",
+    "bottom-0 right-16",
+  ];
+
+  const getIcon = (item) => {
+    if (item.icon?.startsWith('http')) return <img src={item.icon} alt={item.title} className="w-8 h-8 object-contain" />;
+    switch (item.icon) {
       case "MdWeb": return <MdWeb />;
       case "GiCrown": return <GiCrown />;
       case "FaChartLine": return <FaChartLine />;
@@ -25,14 +35,15 @@ const WeBuildBrands = ({ data }) => {
   };
 
   const finalTitle = data?.title || "We Build Brands";
-  const finalBackgroundImage = data?.backgroundImage || "https://res.cloudinary.com/dx0wvjqmg/image/upload/v1772321649/webtechsathi/emmraulqaohppcs5p0gn.jpg";
-  const finalCards = data?.cards || defaultCards;
+  const finalBgImage = data?.bgImage || "https://res.cloudinary.com/dx0wvjqmg/image/upload/v1772321649/webtechsathi/emmraulqaohppcs5p0gn.jpg";
+  const finalNodes = data?.nodes || defaultNodes;
+  const finalCenterText = data?.centerText || "W";
 
   return (
     <section
       className="relative py-28 bg-cover bg-center"
       style={{
-        backgroundImage: `url('${finalBackgroundImage}')`,
+        backgroundImage: `url('${finalBgImage}')`,
       }}
     >
       {/* Dark Overlay */}
@@ -46,27 +57,30 @@ const WeBuildBrands = ({ data }) => {
         </h2>
 
         {/* Circle Container */}
-        <div className="relative w-[700px] h-[500px] mx-auto">
+        <div className="relative w-full max-w-[700px] h-[500px] mx-auto scale-75 md:scale-100">
 
           {/* Center Logo */}
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-full p-6 shadow-xl">
-            <span className="text-4xl text-[#123447] font-bold">W</span>
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-full p-6 shadow-xl z-20">
+            <span className="text-4xl text-[#123447] font-bold">{finalCenterText}</span>
           </div>
 
           {/* Connecting Lines */}
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-[400px] h-[400px] border border-blue-400 rounded-full opacity-40"></div>
+            <div className="w-[300px] h-[300px] md:w-[400px] md:h-[400px] border border-blue-400 rounded-full opacity-40"></div>
           </div>
 
-          {finalCards.map((card, index) => (
-            <Card
-              key={index}
-              title={card.title}
-              text={card.text}
-              position={card.position || "top-0 left-10"}
-              icon={getIcon(card.iconType || card.icon)}
-            />
-          ))}
+          {finalNodes.map((node, index) => {
+            if (index >= positions.length) return null; // Only show up to 6 in the circular layout
+            return (
+              <Card
+                key={index}
+                title={node.title}
+                text={node.description}
+                position={positions[index]}
+                icon={getIcon(node)}
+              />
+            );
+          })}
 
         </div>
       </div>

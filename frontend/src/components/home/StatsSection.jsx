@@ -44,7 +44,7 @@ const Counter = ({ end, suffix = "+" }) => {
   return (
     <h3
       ref={ref}
-      className="text-5xl font-bold text-white"
+      className="text-4xl md:text-5xl font-black text-white"
     >
       {count}
       {suffix}
@@ -60,18 +60,22 @@ const StatsSection = ({ data }) => {
     { end: 10, label: "Award Wins" },
   ];
 
-  const finalStats = data?.stats || defaultStats;
+  const finalStats = (data?.stats && data.stats.length > 0) ? data.stats : defaultStats;
 
   return (
-    <section className="bg-[#1f4c6b] py-20">
-      <div className="max-w-6xl mx-auto grid md:grid-cols-4 text-center gap-10">
+    <section className="bg-gradient-to-br from-[#1f4c6b] to-[#123447] py-16 lg:py-20">
+      <div className="max-w-6xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 text-center gap-y-12 md:gap-10">
 
-        {finalStats.map((stat, index) => (
-          <div key={index}>
-            <Counter end={stat.end} suffix={stat.suffix !== undefined ? stat.suffix : "+"} />
-            <p className="text-white mt-3">{stat.label}</p>
-          </div>
-        ))}
+        {finalStats.map((stat, index) => {
+          const endValue = stat.end !== undefined ? stat.end : (stat.number !== undefined ? stat.number : 0);
+          const labelValue = stat.label || stat.title || "";
+          return (
+            <div key={index}>
+              <Counter end={endValue} suffix={stat.suffix !== undefined ? stat.suffix : "+"} />
+              <p className="text-white mt-3">{labelValue}</p>
+            </div>
+          );
+        })}
 
       </div>
     </section>

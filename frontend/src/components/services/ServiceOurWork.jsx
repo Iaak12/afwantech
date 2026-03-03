@@ -57,7 +57,7 @@ const ServiceOurWork = ({
                   </p>
 
                   <ul className="space-y-3 text-gray-600 mb-8">
-                    {project.services.map((service, i) => (
+                    {project.services?.map((service, i) => (
                       <li key={i} className="flex gap-2">
                         <span className="text-blue-600">✔</span>
                         {service}

@@ -10,6 +10,12 @@ const PageManager = () => {
             pages: [
                 { slug: 'home', title: 'Home Page' },
                 { slug: 'about-us', title: 'About Us' },
+                { slug: 'mission', title: 'Mission & Vision' },
+                { slug: 'why-us', title: 'Why Choose Us' },
+                { slug: 'clients', title: 'Our Clients' },
+                { slug: 'testimonials', title: 'Testimonials' },
+                { slug: 'awards', title: 'Awards' },
+                { slug: 'news', title: 'News & Events' },
                 { slug: 'contact', title: 'Contact Us' }
             ]
         },
@@ -33,6 +39,13 @@ const PageManager = () => {
                 { slug: 'paid-ads-ppc', title: 'Paid Ads' },
                 { slug: 'email-marketing', title: 'Email Marketing' },
                 { slug: 'sms-marketing', title: 'SMS Marketing' },
+                { slug: 'content-marketing', title: 'Content Marketing' },
+                { slug: 'digital-marketing-by-industry', title: 'Digital Mkt by Industry' }
+            ]
+        },
+        {
+            category: 'Branding & PR',
+            pages: [
                 { slug: 'online-reputation-management', title: 'Online Rep Management' },
                 { slug: 'pr-agency', title: 'PR Agency' },
                 { slug: 'corporate-video-production', title: 'Corp Video Production' },
@@ -40,9 +53,21 @@ const PageManager = () => {
             ]
         },
         {
-            category: 'Branding, PR & Packages',
+            category: 'Our Work',
             pages: [
-                // Add related slugs here as they are created
+                { slug: 'web-portfolio', title: 'Web Designing Portfolio' },
+                { slug: 'seo-portfolio', title: 'SEO Portfolio' },
+                { slug: 'graphic-portfolio', title: 'Graphic Design Portfolio' },
+                { slug: 'video-portfolio', title: 'Video Production Portfolio' },
+            ]
+        },
+        {
+            category: 'Packages',
+            pages: [
+                { slug: 'small-business-website-package', title: 'Small Business Pkg' },
+                { slug: 'business-website-with-seo-package', title: 'Business SEO Pkg' },
+                { slug: 'ecommerce-web-designing-package', title: 'Ecommerce Web Pkg' },
+                { slug: 'seo-package', title: 'SEO Package' },
             ]
         }
     ]);

@@ -1,10 +1,8 @@
 ﻿const TrustedSection = ({ data }) => {
-  const finalTitle1 = data?.title1 || "Trusted by";
-  const finalTitle2 = data?.title2 || "3000+ High-Growth";
-  const finalTitle3 = data?.title3 || "MSMEs/ Clients";
+  const finalTitle = data?.title || "Trusted by 3000+ High-Growth MSMEs/ Clients";
 
   const defaultLogos = Array.from({ length: 12 }).map(() => "https://via.placeholder.com/120x50?text=Logo");
-  const finalLogos = data?.logos || defaultLogos;
+  const finalLogos = (data?.logos && data.logos.length > 0) ? data.logos : defaultLogos;
 
   const defaultRibbon = [
     "⭐ Awarded Best SEO Company",
@@ -13,7 +11,7 @@
     "⭐ Reputation Building Company",
     "⭐ Performance Driven Growth"
   ];
-  const finalRibbon = data?.ribbonItems || defaultRibbon;
+  const finalRibbon = (data?.ribbonItems && data.ribbonItems.length > 0) ? data.ribbonItems : defaultRibbon;
 
   return (
     <section className="bg-[#eef2f5] py-20 relative overflow-hidden">
@@ -22,9 +20,7 @@
 
         {/* Heading */}
         <h2 className="text-3xl md:text-4xl font-bold text-[#1d3f54]">
-          {finalTitle1}{" "}
-          <span className="text-yellow-500">{finalTitle2}</span>{" "}
-          {finalTitle3}
+          {finalTitle}
         </h2>
 
         {/* Yellow underline */}

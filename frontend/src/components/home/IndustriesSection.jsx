@@ -26,8 +26,8 @@ const IndustriesSection = ({ data }) => {
   const finalDescription = data?.description || "At Webpulse Solution Pvt. Ltd., we proudly serve a wide range of industries. Our tailored digital solutions are crafted to drive real results and sustainable growth for our clients.";
   const finalProductTitle = data?.productTitle || "Products Based Industries";
   const finalServiceTitle = data?.serviceTitle || "Services Based Industries";
-  const finalProductIndustries = data?.productIndustries || defaultProductIndustries;
-  const finalServiceIndustries = data?.serviceIndustries || defaultServiceIndustries;
+  const finalProductIndustries = (data?.productIndustries && data.productIndustries.length > 0) ? data.productIndustries : defaultProductIndustries;
+  const finalServiceIndustries = (data?.serviceIndustries && data.serviceIndustries.length > 0) ? data.serviceIndustries : defaultServiceIndustries;
   const finalBtnText = data?.btnText || "Connect with Expert";
   const finalBtnLink = data?.btnLink || "/contact";
 

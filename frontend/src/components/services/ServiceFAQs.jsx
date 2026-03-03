@@ -7,7 +7,7 @@
         </h2>
 
         <div className="space-y-4">
-          {faqs.map((faq, i) => (
+          {faqs?.map((faq, i) => (
             <div
               key={i}
               className="bg-white border rounded-lg p-5"

@@ -20,7 +20,7 @@
         {/* Features Grid */}
         <div className="grid md:grid-cols-3 gap-6 border border-gray-300">
 
-          {features.map((feature, index) => (
+          {features?.map((feature, index) => (
             <div
               key={index}
               className="flex flex-col items-center text-center p-8 border border-gray-300 bg-white hover:shadow-md transition"

@@ -45,7 +45,7 @@ const SocialSidebar = () => {
   if (loading || socials.length === 0) return null;
 
   return (
-    <div className="fixed right-0 top-1/3 z-50 flex flex-col gap-2">
+    <div className="fixed right-0 top-1/3 z-50 hidden lg:flex flex-col gap-2">
       {socials.map((social) => {
         if (!social.url) return null;
 

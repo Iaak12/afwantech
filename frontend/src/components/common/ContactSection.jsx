@@ -12,7 +12,7 @@ const ContactSection = ({ data }) => {
             <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12">
                 {/* Left Info */}
                 <div>
-                    <h2 className="text-4xl font-bold text-[#123447] mb-6" dangerouslySetInnerHTML={{ __html: finalTitle }} />
+                    <h2 className="text-3xl md:text-4xl font-black text-[#123447] mb-6 leading-tight" dangerouslySetInnerHTML={{ __html: finalTitle }} />
                     <div className="text-gray-600 mb-6" dangerouslySetInnerHTML={{ __html: finalDescription }} />
 
                     <div className="space-y-4 text-gray-700">
@@ -23,7 +23,7 @@ const ContactSection = ({ data }) => {
                 </div>
 
                 {/* Right Form */}
-                <ContactForm />
+                <ContactForm extraFields={data?.extraFields || []} />
             </div>
         </section>
     );

@@ -2,7 +2,7 @@ import { useState } from "react";
 import API_BASE_URL from "../../config/api";
 import { FaUser, FaEnvelope, FaPhone, FaCommentDots } from "react-icons/fa";
 
-const ContactForm = () => {
+const ContactForm = ({ extraFields = [] }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -10,6 +10,7 @@ const ContactForm = () => {
     message: ""
   });
 
+  const [extraData, setExtraData] = useState({});
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
@@ -24,16 +25,18 @@ const ContactForm = () => {
     setLoading(true);
 
     try {
+      const payload = { ...formData, extraFields: extraData };
       const response = await fetch(`${API_BASE_URL}/api/contact`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(payload)
       });
 
       const data = await response.json();
       if (response.ok) {
         alert("Message Sent Successfully 🚀");
         setFormData({ name: "", email: "", phone: "", message: "" });
+        setExtraData({});
       } else {
         alert(data.message || "Failed to send message. Please try again.");
       }
@@ -93,6 +96,31 @@ const ContactForm = () => {
             className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1d2951] transition"
           />
         </div>
+
+        {/* Dynamic Extra Fields */}
+        {extraFields.map((field, idx) => (
+          <div key={idx} className="relative">
+            {field.type === 'textarea' ? (
+              <textarea
+                placeholder={field.label}
+                required={field.required}
+                rows="3"
+                value={extraData[field.label] || ""}
+                onChange={(e) => setExtraData({ ...extraData, [field.label]: e.target.value })}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1d2951] transition resize-none"
+              ></textarea>
+            ) : (
+              <input
+                type={field.type || 'text'}
+                placeholder={field.label}
+                required={field.required}
+                value={extraData[field.label] || ""}
+                onChange={(e) => setExtraData({ ...extraData, [field.label]: e.target.value })}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1d2951] transition"
+              />
+            )}
+          </div>
+        ))}
 
         {/* Message */}
         <div className="relative">

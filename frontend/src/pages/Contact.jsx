@@ -2,6 +2,7 @@
 import API_BASE_URL from "../config/api";
 import Breadcrumb from "../components/common/Breadcrumb";
 import ContactSection from "../components/common/ContactSection";
+import FAQSection from "../components/common/FAQSection";
 import StatsSection from "../components/home/StatsSection";
 import GenericContent from "../components/home/GenericContent";
 import SEO from "../components/SEO";
@@ -33,10 +34,8 @@ const Contact = () => {
     switch (section.type) {
       case "contact_section":
         return <ContactSection data={section.data} />;
-      case "stats":
-        return <StatsSection data={section.data} />;
-      case "content":
-        return <GenericContent data={section.data} />;
+      case "faq_section":
+        return <FAQSection data={section.data} />;
       default:
         return null;
     }
@@ -50,6 +49,7 @@ const Contact = () => {
         keywords={pageData.keywords}
       />
       <Breadcrumb currentPage={pageData.title || "Contact"} />
+      <div className="pt-2 sm:pt-4"></div>
       {pageData.sections && pageData.sections.map((section, index) => (
         <React.Fragment key={index}>
           {renderSection(section)}

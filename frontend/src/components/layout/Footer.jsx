@@ -96,6 +96,7 @@ const Footer = () => {
         { label: 'Our Clients', url: '/clients' },
         { label: 'Testimonials', url: '/testimonials' },
         { label: 'Awards & Achievements', url: '/awards' },
+        { label: 'Help & FAQ', url: '/faq' },
         { label: 'Contact Us', url: '/contact' },
         { label: 'Terms & Conditions', url: '/terms-conditions' }
       ]

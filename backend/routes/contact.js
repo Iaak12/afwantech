@@ -19,13 +19,13 @@ const authMiddleware = (req, res, next) => {
 // PUBLIC: Submit a new contact message
 router.post('/', async (req, res) => {
     try {
-        const { name, email, phone, message } = req.body;
+        const { name, email, phone, message, extraFields } = req.body;
 
         if (!name || !email || !message) {
             return res.status(400).json({ message: 'Name, email, and message are required.' });
         }
 
-        const newMessage = new ContactMessage({ name, email, phone, message });
+        const newMessage = new ContactMessage({ name, email, phone, message, extraFields });
         await newMessage.save();
 
         res.status(201).json({ message: 'Message sent successfully!', data: newMessage });

@@ -44,10 +44,8 @@ const CaseStudiesSection = ({ data }) => {
 
   const finalTitle = data?.title || "Case Studies: Our Real Success Stories";
   const finalDescription = data?.description || "Every project tells a story of dedication, strategy, and measurable results. Dive into our success stories to see how we turn challenges into achievements.";
-  const finalCaseStudies = data?.caseStudies || defaultCaseStudies;
-  const finalBtnCardText = data?.btnCardText || "Connect with Expert →";
+  const finalCaseStudies = (data?.caseStudies && data.caseStudies.length > 0) ? data.caseStudies : defaultCaseStudies;
   const finalBtnBottomText = data?.btnBottomText || "Connect with Expert →";
-  const finalBtnCardLink = data?.btnCardLink || "/contact";
   const finalBtnBottomLink = data?.btnBottomLink || "/contact";
 
   return (
@@ -108,8 +106,8 @@ const CaseStudiesSection = ({ data }) => {
                     <div className="mt-6 bg-white rounded-xl shadow overflow-hidden">
 
                       {/* Header */}
-                      <div className="bg-[#123447] text-white px-6 py-4 font-semibold">
-                        1 Service offered by us
+                      <div className="bg-[#123447] text-white px-6 py-4 font-semibold uppercase tracking-wider text-sm">
+                        {item.listHeading || "Services Offered"}
                       </div>
 
                       {/* Body */}
@@ -125,22 +123,11 @@ const CaseStudiesSection = ({ data }) => {
                         ))}
 
                         <Link
-                          to={finalBtnCardLink}
+                          to={item.btnLink || "/contact"}
                           className="mt-4 bg-yellow-400 px-5 py-2 rounded font-semibold hover:bg-yellow-500 transition inline-block"
                         >
-                          {finalBtnCardText}
+                          {item.btnText || "View Case Study"}
                         </Link>
-                      </div>
-                    </div>
-
-                    {/* Extra Accordions (Collapsed Style Look) */}
-                    <div className="mt-4 space-y-3">
-                      <div className="bg-white px-6 py-4 rounded-lg shadow text-gray-700">
-                        2 Keyword Ranking on Google.com
-                      </div>
-
-                      <div className="bg-white px-6 py-4 rounded-lg shadow text-gray-700">
-                        3 Off Page SEO for Link-building
                       </div>
                     </div>
                   </div>

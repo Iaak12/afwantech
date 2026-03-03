@@ -32,7 +32,7 @@
             </p>
 
             <ul className="space-y-4">
-              {points.map((item, index) => (
+              {points?.map((item, index) => (
                 <li key={index} className="flex gap-3 items-start">
                   <span className="text-blue-600 mt-1">✔</span>
                   <span className="text-gray-700">{item}</span>
@@ -60,7 +60,7 @@
             </h3>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
-              {qualityItems.map((item, index) => (
+              {qualityItems?.map((item, index) => (
                 <div key={index} className="text-center">
                   {item.icon && (
                     <img

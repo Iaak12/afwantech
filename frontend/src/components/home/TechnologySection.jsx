@@ -1,14 +1,12 @@
 ﻿const TechnologySection = ({ data }) => {
   const defaultTools = [
-    "Ubersuggest", "PHP", "Google Analytics", "CodeIgniter",
-    "Meta Business Partner", "JavaScript + jQuery", "Google Partner", "Linux",
-    "Google Search Console", "FileZilla", "Bootstrap", "Visual Studio Code",
-    "HTML5", "Adobe Photoshop", "W3C", "Adobe Illustrator"
+    { name: "Ubersuggest" }, { name: "PHP" }, { name: "Google Analytics" }, { name: "CodeIgniter" },
+    { name: "Meta Business Partner" }, { name: "JavaScript + jQuery" }, { name: "Google Partner" }, { name: "Linux" },
   ];
 
   const finalTitle = data?.title || "Technology and Tools we use";
-  const finalDescription = data?.description || "At Webpulse Solution Pvt. Ltd., we harness the latest technologies and tools to deliver exceptional results for our clients. These tools empower us to deliver top-notch solutions tailored to your business needs.";
-  const finalTools = data?.tools || defaultTools;
+  const finalDescription = data?.description || "At Webpulse Solution Pvt. Ltd., we harness the latest technologies and tools to deliver exceptional results for our clients.";
+  const finalTools = (data?.tools && data.tools.length > 0) ? data.tools : defaultTools;
 
   return (
     <section className="bg-[#eef3f7] py-20">
@@ -31,7 +29,7 @@
               key={index}
               className="bg-white border border-gray-200 rounded-md p-5 flex items-center justify-center text-center text-gray-500 text-sm font-medium shadow-sm hover:shadow-md transition"
             >
-              {tool}
+              {tool.name}
             </div>
           ))}
 

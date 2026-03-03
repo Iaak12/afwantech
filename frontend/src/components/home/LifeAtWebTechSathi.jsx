@@ -3,20 +3,12 @@
 const LifeAtAfwanTech = ({ data }) => {
   const defaultSlides = [
     {
-      img: "https://res.cloudinary.com/dx0wvjqmg/image/upload/v1772321622/webtechsathi/qhimok3me2gcxv805jru.jpg",
-      title: "Unleashing Fun With the Afwan Tech Team"
+      image: "https://res.cloudinary.com/dx0wvjqmg/image/upload/v1772321622/webtechsathi/qhimok3me2gcxv805jru.jpg",
+      caption: "Unleashing Fun With the Afwan Tech Team"
     },
     {
-      img: "https://res.cloudinary.com/dx0wvjqmg/image/upload/v1772321623/webtechsathi/s4f0cloh8nzu0iwih60x.jpg",
-      title: "Afwan Tech Team Celebrates Diwali With Joy"
-    },
-    {
-      img: "https://res.cloudinary.com/dx0wvjqmg/image/upload/v1772321625/webtechsathi/gwgjr7tofeursrl30s0w.jpg",
-      title: "Festive Celebration at Afwan Tech"
-    },
-    {
-      img: "https://res.cloudinary.com/dx0wvjqmg/image/upload/v1772321626/webtechsathi/mtnceahpcspiukhxjike.jpg",
-      title: "Holi Celebration at Afwan Tech"
+      image: "https://res.cloudinary.com/dx0wvjqmg/image/upload/v1772321623/webtechsathi/s4f0cloh8nzu0iwih60x.jpg",
+      caption: "Afwan Tech Team Celebrates Diwali With Joy"
     }
   ];
 
@@ -57,13 +49,13 @@ const LifeAtAfwanTech = ({ data }) => {
             <div key={index} className="min-w-full px-3">
               <div className="bg-white rounded-xl shadow-md overflow-hidden">
                 <img
-                  src={slide.img}
-                  alt={slide.title}
+                  src={slide.image}
+                  alt={slide.caption}
                   className="w-full h-64 object-cover"
                 />
                 <div className="p-5 text-center">
                   <h4 className="text-lg font-semibold text-[#123447]">
-                    {slide.title}
+                    {slide.caption}
                   </h4>
                 </div>
               </div>

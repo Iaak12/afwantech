@@ -12,7 +12,6 @@ const ServiceTabs = ({
     { name: "Key Features", id: "features" },
     { name: "Benefits", id: "benefits" },
     { name: "Our Work", id: "work" },
-    { name: "Happy Clients", id: "clients" },
   ];
 
   const [activeTab, setActiveTab] = useState("plans");
@@ -49,11 +48,10 @@ const ServiceTabs = ({
               key={tab.id}
               href={`#${tab.id}`}
               className={`px-6 py-2 rounded-full font-medium transition-all duration-300
-              ${
-                activeTab === tab.id
+              ${activeTab === tab.id
                   ? "bg-[#123447] text-white shadow-md"
                   : "bg-gray-200 text-gray-700 hover:bg-[#123447] hover:text-white"
-              }`}
+                }`}
             >
               {tab.name}
             </a>
@@ -77,10 +75,6 @@ const ServiceTabs = ({
 
           <div id="work" className="scroll-mt-32">
             {workData}
-          </div>
-
-          <div id="clients" className="scroll-mt-32">
-            {clientsData}
           </div>
 
         </div>

@@ -2,17 +2,17 @@
 import { Link } from "react-router-dom";
 
 const UnlockSection = ({ data }) => {
-  const defaultServices = [
-    { id: "1", title: "Website with SEO in Multiple Locations", img: "https://res.cloudinary.com/dx0wvjqmg/image/upload/v1772321634/webtechsathi/jypsl7vzmnikxkbcysqq.jpg", list: [{ name: "Local SEO", link: "/local-seo" }, { name: "City Wise SEO", link: "/city-seo" }, { name: "State Wise SEO", link: "/state-seo" }, { name: "National SEO", link: "/national-seo" }] },
-    { id: "2", title: "Off Page SEO for Link-building", img: "https://res.cloudinary.com/dx0wvjqmg/image/upload/v1772321635/webtechsathi/eycpiidxhngwa5lzbizr.jpg", list: [{ name: "Link Building", link: "/link-building" }, { name: "Domain Authority", link: "/domain-authority" }, { name: "Technical SEO", link: "/technical-seo" }, { name: "Content Marketing", link: "/content-marketing" }] },
-    { id: "3", title: "Brand Image Building", img: "https://res.cloudinary.com/dx0wvjqmg/image/upload/v1772321637/webtechsathi/xxkkynjh6aszfsn2yjn5.jpg", list: [{ name: "PR Distribution", link: "/pr-distribution" }, { name: "Media Coverage", link: "/media-coverage" }, { name: "Online Branding", link: "/online-branding" }, { name: "Press Releases", link: "/press-releases" }] },
-    { id: "4", title: "SEO of Google My Business Listing", img: "https://res.cloudinary.com/dx0wvjqmg/image/upload/v1772321639/webtechsathi/fjpfhl0rnlgjb4jwvzzq.jpg", list: [{ name: "GMB Optimization", link: "/gmb-optimization" }, { name: "Review Management", link: "/review-management" }, { name: "Local Ranking", link: "/local-ranking" }, { name: "Maps SEO", link: "/maps-seo" }] },
-    { id: "5", title: "Digital Marketing", img: "https://res.cloudinary.com/dx0wvjqmg/image/upload/v1772321640/webtechsathi/hgovnrdsfpdbarjh5c5c.jpg", list: [{ name: "Social Media", link: "/social-media" }, { name: "Performance Ads", link: "/performance-ads" }, { name: "Lead Generation", link: "/lead-generation" }, { name: "Content Strategy", link: "/content-strategy" }] }
+  const defaultCards = [
+    { number: "1", title: "Website with SEO in Multiple Locations", image: "https://res.cloudinary.com/dx0wvjqmg/image/upload/v1772321634/webtechsathi/jypsl7vzmnikxkbcysqq.jpg", bulletPoints: "<ul><li>Local SEO</li><li>City Wise SEO</li><li>State Wise SEO</li><li>National SEO</li></ul>" },
+    { number: "2", title: "Off Page SEO for Link-building", image: "https://res.cloudinary.com/dx0wvjqmg/image/upload/v1772321635/webtechsathi/eycpiidxhngwa5lzbizr.jpg", bulletPoints: "<ul><li>Link Building</li><li>Domain Authority</li><li>Technical SEO</li><li>Content Marketing</li></ul>" },
+    { number: "3", title: "Brand Image Building", image: "https://res.cloudinary.com/dx0wvjqmg/image/upload/v1772321637/webtechsathi/xxkkynjh6aszfsn2yjn5.jpg", bulletPoints: "<ul><li>PR Distribution</li><li>Media Coverage</li><li>Online Branding</li><li>Press Releases</li></ul>" },
+    { number: "4", title: "SEO of Google My Business Listing", image: "https://res.cloudinary.com/dx0wvjqmg/image/upload/v1772321639/webtechsathi/fjpfhl0rnlgjb4jwvzzq.jpg", bulletPoints: "<ul><li>GMB Optimization</li><li>Review Management</li><li>Local Ranking</li><li>Maps SEO</li></ul>" },
+    { number: "5", title: "Digital Marketing", image: "https://res.cloudinary.com/dx0wvjqmg/image/upload/v1772321640/webtechsathi/hgovnrdsfpdbarjh5c5c.jpg", bulletPoints: "<ul><li>Social Media</li><li>Performance Ads</li><li>Lead Generation</li><li>Content Strategy</li></ul>" }
   ];
 
   const finalTitle = data?.title || "Unlock 10x Growth with Our Unique Digital Marketing Techniques";
   const finalDescription = data?.description || "Following services have been developed after years of research & applied for thousands of small & medium businesses.";
-  const finalServices = data?.services || defaultServices;
+  const finalCards = data?.cards || defaultCards;
   const finalFooterText = data?.footerText || "Lead your industry not just in your own city, but also in your target cities & countries, with our Web Development with City wise SEO, Link Building Off Page SEO, SEO of your GMB Listing, Comprehensive Digital Marketing, Online Reputation Building with Branding & PR Services, all under one roof.";
   const finalBtnText = data?.btnText || "Connect with Expert";
   const finalBtnLink = data?.btnLink || "/contact";
@@ -31,36 +31,36 @@ const UnlockSection = ({ data }) => {
         {/* Cards */}
         <div className="grid md:grid-cols-5 gap-6 mt-14">
 
-          {finalServices.map((service, index) => (
+          {finalCards.map((card, index) => (
             <div
-              key={service.id || index}
+              key={index}
               className="relative bg-[#f0f2f4] border border-gray-300 rounded-xl overflow-hidden group transition-all duration-300"
             >
 
               {/* Big Number */}
               <span className="absolute top-4 left-5 text-6xl font-bold text-gray-300 group-hover:text-yellow-400 transition">
-                {service.id || index + 1}
+                {card.number || index + 1}
               </span>
 
               {/* Title */}
               <div className="p-6 pt-20 text-left">
                 <h4 className="font-semibold text-[#123447] text-sm leading-snug group-hover:text-white transition">
-                  {service.title}
+                  {card.title}
                 </h4>
               </div>
 
               {/* Image */}
               <div className="px-6 pb-6">
                 <img
-                  src={service.img}
-                  alt={service.title}
+                  src={card.image}
+                  alt={card.title}
                   className="w-full h-36 object-cover rounded-lg"
                 />
               </div>
 
               {/* Arrow Clickable */}
               <Link
-                to={service.link || "/contact"}
+                to={card.link || "/contact"}
                 className="absolute bottom-5 right-5 text-[#123447] group-hover:text-yellow-400 transition"
               >
                 <FaArrowRight />
@@ -71,29 +71,23 @@ const UnlockSection = ({ data }) => {
 
                 {/* Hover Number */}
                 <span className="absolute top-4 left-5 text-6xl font-bold text-yellow-400">
-                  {service.id || index + 1}
+                  {card.number || index + 1}
                 </span>
 
                 <div className="mt-20 text-left text-white space-y-3 text-sm">
                   <h4 className="font-semibold text-base mb-3">
-                    {service.title}
+                    {card.title}
                   </h4>
 
-                  {service.list?.map((item, i) => (
-                    <Link
-                      key={i}
-                      to={item.link}
-                      className="flex items-center gap-2 hover:text-yellow-400 transition"
-                    >
-                      <span className="w-2 h-[2px] bg-yellow-400"></span>
-                      {item.name}
-                    </Link>
-                  ))}
+                  <div
+                    className="prose-sm prose-invert"
+                    dangerouslySetInnerHTML={{ __html: card.bulletPoints }}
+                  />
                 </div>
 
                 {/* Hover Arrow */}
                 <Link
-                  to={service.link || "/contact"}
+                  to={card.link || "/contact"}
                   className="absolute bottom-5 right-5 text-yellow-400"
                 >
                   <FaArrowRight />

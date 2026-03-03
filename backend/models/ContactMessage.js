@@ -5,6 +5,7 @@ const contactMessageSchema = new mongoose.Schema({
     email: { type: String, required: true },
     phone: { type: String },
     message: { type: String, required: true },
+    extraFields: { type: Object, default: {} },
     isRead: { type: Boolean, default: false },
 }, { timestamps: true });
 
